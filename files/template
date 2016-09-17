@@ -1,0 +1,1 @@
+${export.get('path')} ${export.get('allowed')}(${export.get('options', 'ro,sync,no_root_squash')})
