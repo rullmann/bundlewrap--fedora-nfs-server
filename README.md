@@ -14,10 +14,17 @@ This bundle has been tested on the following systems:
 | Fedora 24   | `[x]` |
 | Fedberry 23 | `[ ]` |
 
+## Integrations
+
+* Bundles:
+  * [firewalld](https://github.com/rullmann/bundlewrap-firewalld)
+    * Zone settings from firewalld bundle will be used, if you do not overwrite this behaviour in the metdata.
+
 ## Metadata
 
     'metadata': {
         'fedora-nfs-server': {
+            'firewalld_permitted_zones': [ "public", "internal" ], # optional, will override zone settings from firewalld
             'exports': [
                 {
                     'alias': "tmptest",

@@ -61,3 +61,145 @@ for export in node.metadata['nfs-server']['exports']:
             "svc_systemd:rpcbind:restart",
         ],
     }
+
+if node.has_bundle("firewalld"):
+    if node.metadata.get('nfs-server', {}).get('firewalld_permitted_zones'):
+        for zone in node.metadata.get('nfs-server', {}).get('firewalld_permitted_zones'):
+            actions['firewalld_add_nfs_zone_{}'.format(zone)] = {
+                'command': "firewall-cmd --permanent --zone={} --add-service=nfs".format(zone),
+                'unless': "firewall-cmd --zone={} --list-services | grep nfs".format(zone),
+                'cascade_skip': False,
+                'needs': [
+                    "pkg_yum:firewalld",
+                ],
+                'triggers': [
+                    "action:firewalld_reload",
+                ],
+            }
+            actions['firewalld_add_mountd_zone_{}'.format(zone)] = {
+                'command': "firewall-cmd --permanent --zone={} --add-service=mountd".format(zone),
+                'unless': "firewall-cmd --zone={} --list-services | grep mountd".format(zone),
+                'cascade_skip': False,
+                'needs': [
+                    "pkg_yum:firewalld",
+                ],
+                'triggers': [
+                    "action:firewalld_reload",
+                ],
+            }
+            actions['firewalld_add_rpc-bind_zone_{}'.format(zone)] = {
+                'command': "firewall-cmd --permanent --zone={} --add-service=rpc-bind".format(zone),
+                'unless': "firewall-cmd --zone={} --list-services | grep rpc-bind".format(zone),
+                'cascade_skip': False,
+                'needs': [
+                    "pkg_yum:firewalld",
+                ],
+                'triggers': [
+                    "action:firewalld_reload",
+                ],
+            }
+    elif node.metadata.get('firewalld', {}).get('default_zone'):
+        default_zone = node.metadata.get('firewalld', {}).get('default_zone')
+        actions['firewalld_add_nfs_zone_{}'.format(default_zone)] = {
+            'command': "firewall-cmd --permanent --zone={} --add-service=nfs".format(default_zone),
+            'unless': "firewall-cmd --zone={} --list-services | grep nfs".format(default_zone),
+            'cascade_skip': False,
+            'needs': [
+                "pkg_yum:firewalld",
+            ],
+            'triggers': [
+                "action:firewalld_reload",
+            ],
+        }
+        actions['firewalld_add_mountd_zone_{}'.format(default_zone)] = {
+            'command': "firewall-cmd --permanent --zone={} --add-service=mountd".format(default_zone),
+            'unless': "firewall-cmd --zone={} --list-services | grep mountd".format(default_zone),
+            'cascade_skip': False,
+            'needs': [
+                "pkg_yum:firewalld",
+            ],
+            'triggers': [
+                "action:firewalld_reload",
+            ],
+        }
+        actions['firewalld_add_rpc-bind_zone_{}'.format(default_zone)] = {
+            'command': "firewall-cmd --permanent --zone={} --add-service=rpc-bind".format(default_zone),
+            'unless': "firewall-cmd --zone={} --list-services | grep rpc-bind".format(default_zone),
+            'cascade_skip': False,
+            'needs': [
+                "pkg_yum:firewalld",
+            ],
+            'triggers': [
+                "action:firewalld_reload",
+            ],
+        }
+    elif node.metadata.get('firewalld', {}).get('custom_zones', False):
+        for interface in node.metadata['interfaces']:
+            custom_zone = node.metadata.get('interfaces', {}).get(interface).get('firewalld_zone')
+            actions['firewalld_add_nfs_zone_{}'.format(custom_zone)] = {
+                'command': "firewall-cmd --permanent --zone={} --add-service=nfs".format(custom_zone),
+                'unless': "firewall-cmd --zone={} --list-services | grep nfs".format(custom_zone),
+                'cascade_skip': False,
+                'needs': [
+                    "pkg_yum:firewalld",
+                ],
+                'triggers': [
+                    "action:firewalld_reload",
+                ],
+            }
+            actions['firewalld_add_mountd_zone_{}'.format(custom_zone)] = {
+                'command': "firewall-cmd --permanent --zone={} --add-service=mountd".format(custom_zone),
+                'unless': "firewall-cmd --zone={} --list-services | grep mountd".format(custom_zone),
+                'cascade_skip': False,
+                'needs': [
+                    "pkg_yum:firewalld",
+                ],
+                'triggers': [
+                    "action:firewalld_reload",
+                ],
+            }
+            actions['firewalld_add_rpc-bind_zone_{}'.format(custom_zone)] = {
+                'command': "firewall-cmd --permanent --zone={} --add-service=rpc-bind".format(custom_zone),
+                'unless': "firewall-cmd --zone={} --list-services | grep rpc-bind".format(custom_zone),
+                'cascade_skip': False,
+                'needs': [
+                    "pkg_yum:firewalld",
+                ],
+                'triggers': [
+                    "action:firewalld_reload",
+                ],
+            }
+    else:
+        actions['firewalld_add_nfs'] = {
+            'command': "firewall-cmd --permanent --add-service=nfs",
+            'unless': "firewall-cmd --list-services | grep nfs",
+            'cascade_skip': False,
+            'needs': [
+                "pkg_yum:firewalld",
+            ],
+            'triggers': [
+                "action:firewalld_reload",
+            ],
+        }
+        actions['firewalld_add_mountd'] = {
+            'command': "firewall-cmd --permanent --add-service=mountd",
+            'unless': "firewall-cmd --list-services | grep mountd",
+            'cascade_skip': False,
+            'needs': [
+                "pkg_yum:firewalld",
+            ],
+            'triggers': [
+                "action:firewalld_reload",
+            ],
+        }
+        actions['firewalld_add_rpc-bind'] = {
+            'command': "firewall-cmd --permanent --add-service=rpc-bind",
+            'unless': "firewall-cmd --list-services | grep rpc-bind",
+            'cascade_skip': False,
+            'needs': [
+                "pkg_yum:firewalld",
+            ],
+            'triggers': [
+                "action:firewalld_reload",
+            ],
+        }
