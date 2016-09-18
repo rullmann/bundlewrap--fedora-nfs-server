@@ -1,6 +1,6 @@
-# bundlewrap-fedora-nfs-server
+# bundlewrap-nfs-server
 
-`bundlewrap-fedora-nfs-server` installs various packages and services required for running an NFS server.
+`bundlewrap-nfs-server` installs various packages and services required for running an NFS server.
 Additionally it is possible to to define 1 to n exports.
 
 (!) Please note that this bundle doesn't work on CentOS and RHEL 7 die to this bug: https://bugs.centos.org/view.php?id=9753
@@ -11,9 +11,7 @@ This bundle has been tested on the following systems:
 
 | OS          | `[x]` |
 | ----------- | ----- |
-| CentOS 7    | `[ ]` |
 | Fedora 24   | `[x]` |
-| RHEL 7      | `[ ]` |
 | Fedberry 23 | `[ ]` |
 
 ## Metadata
