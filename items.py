@@ -42,7 +42,7 @@ actions = {
     },
 }
 
-for export in node.metadata['fedora-nfs-server']['exports']:
+for export in node.metadata['nfs-server']['exports']:
     files["/etc/exports.d/{}".format(export['alias'])] = {
         'source': "template",
         'owner': "root",
