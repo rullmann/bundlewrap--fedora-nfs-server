@@ -1,4 +1,4 @@
-pkg_yum = {
+pkg_dnf = {
     "nfs-utils": {},
     "libnfsidmap": {},
 }
@@ -7,25 +7,25 @@ svc_systemd = {
     'nfs-server': {
         'enabled': True,
         'needs': [
-            "pkg_yum:nfs-utils",
+            "pkg_dnf:nfs-utils",
         ],
     },
     'rpcbind': {
         'enabled': True,
         'needs': [
-            "pkg_yum:nfs-utils",
+            "pkg_dnf:nfs-utils",
         ],
     },
     'rpc-statd': {
         'enabled': True,
         'needs': [
-            "pkg_yum:nfs-utils",
+            "pkg_dnf:nfs-utils",
         ],
     },
     'nfs-idmapd': {
         'enabled': True,
         'needs': [
-            "pkg_yum:nfs-utils",
+            "pkg_dnf:nfs-utils",
         ],
     },
 }
@@ -37,7 +37,7 @@ actions = {
         'command': "exportfs -a",
         'triggered': True,
         'needs': [
-            "pkg_yum:nfs-utils",
+            "pkg_dnf:nfs-utils",
         ],
     },
 }
@@ -53,7 +53,7 @@ for export in node.metadata['nfs-server']['exports']:
             'export': export,
         },
         'needs': [
-            "pkg_yum:nfs-utils",
+            "pkg_dnf:nfs-utils",
         ],
         'triggers': [
             "action:nfs_export",
@@ -70,7 +70,7 @@ if node.has_bundle("firewalld"):
                 'unless': "firewall-cmd --zone={} --list-services | grep nfs".format(zone),
                 'cascade_skip': False,
                 'needs': [
-                    "pkg_yum:firewalld",
+                    "pkg_dnf:firewalld",
                 ],
                 'triggers': [
                     "action:firewalld_reload",
@@ -81,7 +81,7 @@ if node.has_bundle("firewalld"):
                 'unless': "firewall-cmd --zone={} --list-services | grep mountd".format(zone),
                 'cascade_skip': False,
                 'needs': [
-                    "pkg_yum:firewalld",
+                    "pkg_dnf:firewalld",
                 ],
                 'triggers': [
                     "action:firewalld_reload",
@@ -92,7 +92,7 @@ if node.has_bundle("firewalld"):
                 'unless': "firewall-cmd --zone={} --list-services | grep rpc-bind".format(zone),
                 'cascade_skip': False,
                 'needs': [
-                    "pkg_yum:firewalld",
+                    "pkg_dnf:firewalld",
                 ],
                 'triggers': [
                     "action:firewalld_reload",
@@ -105,7 +105,7 @@ if node.has_bundle("firewalld"):
             'unless': "firewall-cmd --zone={} --list-services | grep nfs".format(default_zone),
             'cascade_skip': False,
             'needs': [
-                "pkg_yum:firewalld",
+                "pkg_dnf:firewalld",
             ],
             'triggers': [
                 "action:firewalld_reload",
@@ -116,7 +116,7 @@ if node.has_bundle("firewalld"):
             'unless': "firewall-cmd --zone={} --list-services | grep mountd".format(default_zone),
             'cascade_skip': False,
             'needs': [
-                "pkg_yum:firewalld",
+                "pkg_dnf:firewalld",
             ],
             'triggers': [
                 "action:firewalld_reload",
@@ -127,7 +127,7 @@ if node.has_bundle("firewalld"):
             'unless': "firewall-cmd --zone={} --list-services | grep rpc-bind".format(default_zone),
             'cascade_skip': False,
             'needs': [
-                "pkg_yum:firewalld",
+                "pkg_dnf:firewalld",
             ],
             'triggers': [
                 "action:firewalld_reload",
@@ -141,7 +141,7 @@ if node.has_bundle("firewalld"):
                 'unless': "firewall-cmd --zone={} --list-services | grep nfs".format(custom_zone),
                 'cascade_skip': False,
                 'needs': [
-                    "pkg_yum:firewalld",
+                    "pkg_dnf:firewalld",
                 ],
                 'triggers': [
                     "action:firewalld_reload",
@@ -152,7 +152,7 @@ if node.has_bundle("firewalld"):
                 'unless': "firewall-cmd --zone={} --list-services | grep mountd".format(custom_zone),
                 'cascade_skip': False,
                 'needs': [
-                    "pkg_yum:firewalld",
+                    "pkg_dnf:firewalld",
                 ],
                 'triggers': [
                     "action:firewalld_reload",
@@ -163,7 +163,7 @@ if node.has_bundle("firewalld"):
                 'unless': "firewall-cmd --zone={} --list-services | grep rpc-bind".format(custom_zone),
                 'cascade_skip': False,
                 'needs': [
-                    "pkg_yum:firewalld",
+                    "pkg_dnf:firewalld",
                 ],
                 'triggers': [
                     "action:firewalld_reload",
@@ -175,7 +175,7 @@ if node.has_bundle("firewalld"):
             'unless': "firewall-cmd --list-services | grep nfs",
             'cascade_skip': False,
             'needs': [
-                "pkg_yum:firewalld",
+                "pkg_dnf:firewalld",
             ],
             'triggers': [
                 "action:firewalld_reload",
@@ -186,7 +186,7 @@ if node.has_bundle("firewalld"):
             'unless': "firewall-cmd --list-services | grep mountd",
             'cascade_skip': False,
             'needs': [
-                "pkg_yum:firewalld",
+                "pkg_dnf:firewalld",
             ],
             'triggers': [
                 "action:firewalld_reload",
@@ -197,7 +197,7 @@ if node.has_bundle("firewalld"):
             'unless': "firewall-cmd --list-services | grep rpc-bind",
             'cascade_skip': False,
             'needs': [
-                "pkg_yum:firewalld",
+                "pkg_dnf:firewalld",
             ],
             'triggers': [
                 "action:firewalld_reload",
