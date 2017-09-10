@@ -5,15 +5,6 @@ Additionally it is possible to to define 1 to n exports.
 
 (!) Please note that this bundle doesn't work on CentOS and RHEL 7 die to this bug: https://bugs.centos.org/view.php?id=9753
 
-## Compatibility
-
-This bundle has been tested on the following systems:
-
-| OS          | `[x]` |
-| ----------- | ----- |
-| Fedora 24   | `[x]` |
-| Fedberry 23 | `[ ]` |
-
 ## Integrations
 
 * Bundles:
