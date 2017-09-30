@@ -5,25 +5,21 @@ pkg_dnf = {
 
 svc_systemd = {
     'nfs-server': {
-        'enabled': True,
         'needs': [
             "pkg_dnf:nfs-utils",
         ],
     },
     'rpcbind': {
-        'enabled': True,
         'needs': [
             "pkg_dnf:nfs-utils",
         ],
     },
     'rpc-statd': {
-        'enabled': True,
         'needs': [
             "pkg_dnf:nfs-utils",
         ],
     },
     'nfs-idmapd': {
-        'enabled': True,
         'needs': [
             "pkg_dnf:nfs-utils",
         ],
@@ -45,8 +41,6 @@ actions = {
 for export in node.metadata['nfs-server']['exports']:
     files["/etc/exports.d/{}".format(export['alias'])] = {
         'source': "template",
-        'owner': "root",
-        'group': "root",
         'mode': "0644",
         'content_type': "mako",
         'context': {
