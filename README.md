@@ -5,6 +5,10 @@ Additionally it is possible to to define 1 to n exports.
 
 (!) Please note that this bundle doesn't work on CentOS and RHEL 7 die to this bug: https://bugs.centos.org/view.php?id=9753
 
+## Maintenance notice
+
+As of February 2018 this bundle will not be mainained anymore. If you encounter any issues I cannot help.
+
 ## Integrations
 
 * Bundles:
